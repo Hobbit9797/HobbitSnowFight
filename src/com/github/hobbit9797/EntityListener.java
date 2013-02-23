@@ -14,9 +14,9 @@ public class EntityListener implements Listener{
 		Entity entity = event.getDamager();
 		Snowball snowball= (Snowball) entity;
         if (event.getEntity() instanceof Player &&entity instanceof Snowball&&spiel.playerTeam.containsKey((Player)event.getEntity())) {
-        	//if(!spiel.playerTeam.get(event.getEntity()).equals(spiel.playerTeam.get(snowball.getShooter()))){
+        	if(!spiel.playerTeam.get(event.getEntity()).equals(spiel.playerTeam.get(snowball.getShooter()))){
             event.setDamage(4);
-        	//}
+        	}
            
         }
     }
