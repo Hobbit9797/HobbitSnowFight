@@ -10,6 +10,11 @@ public class Spiel {
 
 	public HashMap<Player, String> playerTeam = new HashMap<Player, String>();
 	public HobbitSnowFight hsf;
+	
+	public Spiel(HobbitSnowFight hsf, EntityListener el){
+		this.hsf = hsf;
+		
+	}
 
 	public void join(Player player2) {
 		Random rnd = new Random();

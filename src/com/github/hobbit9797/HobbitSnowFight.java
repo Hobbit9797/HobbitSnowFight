@@ -15,12 +15,12 @@ public final class HobbitSnowFight extends JavaPlugin {
 	public EntityListener el;
 
 	public void onEnable() {
-		getServer().getPluginManager().registerEvents(new EntityListener(),
-				this);
-		el = new EntityListener();
-		spiel = new Spiel();
-		spiel.hsf = new HobbitSnowFight();
-		el.spiel = new Spiel();
+
+		spiel = new Spiel(this, el);
+		el = new EntityListener(this, spiel);
+
+		// register the entity listener we stored...
+		getServer().getPluginManager().registerEvents(el, this);
 	}
 
 	public void messageAll(String nachricht) {
@@ -56,7 +56,8 @@ public final class HobbitSnowFight extends JavaPlugin {
 				sb.append(arg + " ");
 			messageAll(sb.toString());
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("hsf")&&sender instanceof Player) {
+		} else if (cmd.getName().equalsIgnoreCase("hsf")
+				&& sender instanceof Player) {
 			if (args == null || args.length == 0) {
 				messagePlayer("HobbitSnowFight von Hobbit9797 für Tauncraft",
 						(Player) sender);
@@ -66,7 +67,6 @@ public final class HobbitSnowFight extends JavaPlugin {
 				if (args[0].equalsIgnoreCase("j")) {
 					Player spieler = (Player) sender;
 					spiel.join(spieler);
-					
 
 				}
 				if (args[0].equalsIgnoreCase("h")) {
@@ -74,21 +74,19 @@ public final class HobbitSnowFight extends JavaPlugin {
 					messagePlayer("/hsf j: Trete HSF bei", (Player) sender);
 					messagePlayer("/hsf h: Liste die Hilfe auf",
 							(Player) sender);
-					messagePlayer("/hsf l: Verlasse das Spiel",
-							(Player) sender);
+					messagePlayer("/hsf l: Verlasse das Spiel", (Player) sender);
 					messagePlayer("/hsf s: Zeige Statistiken", (Player) sender);
 				}
 
 				if (args[0].equalsIgnoreCase("l")) {
 					spiel.leave((Player) sender);
 				}
+				// admin befehle
+				if (args[0].equalsIgnoreCase("setred")) {
 
-				if (args[0].equalsIgnoreCase("s")) {
-					if (args.length > 1) {
-						// commands.statistik(spieler, strings[1]);
-					} else {
-						// commands.statistik(spieler);
-					}
+				}
+				if (args[0].equalsIgnoreCase("setblue")) {
+
 				}
 
 			}
