@@ -2,6 +2,7 @@ package com.github.hobbit9797;
 
 import java.util.*;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,8 +14,8 @@ public class Spiel {
 
 	public HashMap<Player, String> playerTeam = new HashMap<Player, String>();
 	public HobbitSnowFight hsf;
-	ItemStack itemstack = new ItemStack(Material.SNOW_BALL, 127);
-	ItemStack itemstack2 = new ItemStack(Material.SNOW_BALL, 127);
+	ItemStack itemstack = new ItemStack(Material.IRON_SPADE, 1);
+
 
 
 	public Spiel(HobbitSnowFight hsf, EntityListener el) {
@@ -34,7 +35,7 @@ public class Spiel {
 				player2.getInventory().setHelmet(
 						new ItemStack(Material.WOOL, 1, Short.parseShort("0"),
 								(byte) Short.parseShort("11")));
-				player2.teleport(new Location(world, hsf.getConfig().getDouble(
+				player2.teleport(new Location(Bukkit.getWorld(hsf.getConfig().getString("world")), hsf.getConfig().getDouble(
 						"blue.x"), hsf.getConfig().getDouble("blue.y")+1, hsf
 						.getConfig().getDouble("blue.z")));
 			} else {
@@ -42,7 +43,7 @@ public class Spiel {
 				player2.getInventory().setHelmet(
 						new ItemStack(Material.WOOL, 1, Short.parseShort("0"),
 								(byte) Short.parseShort("14")));
-				player2.teleport(new Location(world, hsf.getConfig().getDouble(
+				player2.teleport(new Location(Bukkit.getWorld(hsf.getConfig().getString("world")), hsf.getConfig().getDouble(
 						"red.x"), hsf.getConfig().getDouble("red.y")+1, hsf
 						.getConfig().getDouble("red.z")));
 			}
@@ -50,7 +51,7 @@ public class Spiel {
 					"Du bist jetzt im Team " + playerTeam.get(player2), player2);
 			player2.setGameMode(GameMode.SURVIVAL);
 			player2.getInventory().addItem(itemstack);
-			player2.getInventory().addItem(itemstack2);
+
 
 		}
 	}

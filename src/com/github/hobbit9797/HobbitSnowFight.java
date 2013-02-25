@@ -89,6 +89,7 @@ public final class HobbitSnowFight extends JavaPlugin {
 					getConfig().set("red.x", spieler.getLocation().getX());
 					getConfig().set("red.y", spieler.getLocation().getY());
 					getConfig().set("red.z", spieler.getLocation().getZ());
+					getConfig().set("world", spieler.getLocation().getWorld().getName());
 					saveConfig();
 					reloadConfig();
 				}
@@ -97,6 +98,7 @@ public final class HobbitSnowFight extends JavaPlugin {
 					getConfig().set("blue.x", spieler.getLocation().getX());
 					getConfig().set("blue.y", spieler.getLocation().getY());
 					getConfig().set("blue.z", spieler.getLocation().getZ());
+					getConfig().set("world", spieler.getLocation().getWorld().getName());
 					saveConfig();
 					reloadConfig();
 				}
@@ -114,6 +116,7 @@ public final class HobbitSnowFight extends JavaPlugin {
 	     getConfig().addDefault("blue.x", 0);
 	     getConfig().addDefault("blue.y", 0);
 	     getConfig().addDefault("blue.z", 0);
+	     getConfig().addDefault("world", "world");
 	     getConfig().options().copyDefaults(true); 
 	     saveConfig();
 	}
