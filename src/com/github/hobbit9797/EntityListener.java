@@ -1,10 +1,14 @@
 package com.github.hobbit9797;
 
+import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 public class EntityListener implements Listener{
 	
 	  private Spiel spiel;
@@ -28,9 +32,21 @@ public class EntityListener implements Listener{
     }
 	
 	@EventHandler
-	public void playerJoin(PlayerJoinEvent event){
-		
+	public void playerDeath(PlayerRespawnEvent event){
+		if(spiel.playerTeam.containsKey(event.getPlayer())){
+			
+			spiel.playerTeam.remove(event.getPlayer());
+			hsf.messagePlayer("Du hast verloren. Um wieder beizutreten benutze /hsf j.", event.getPlayer());
+		}
 		
 	}
+	
+    @EventHandler
+    public void onInventoryOpen(InventoryClickEvent event)
+    {
+    	if(spiel.playerTeam.containsKey(event.getWhoClicked())){
+        event.setCancelled(true);
+    	}
+    }
 
 }

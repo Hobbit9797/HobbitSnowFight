@@ -21,6 +21,8 @@ public final class HobbitSnowFight extends JavaPlugin {
 
 		// register the entity listener we stored...
 		getServer().getPluginManager().registerEvents(el, this);
+		
+		loadConfiguration();
 	}
 
 	public void messageAll(String nachricht) {
@@ -83,10 +85,20 @@ public final class HobbitSnowFight extends JavaPlugin {
 				}
 				// admin befehle
 				if (args[0].equalsIgnoreCase("setred")) {
-
+					Player spieler = (Player) sender;
+					getConfig().set("red.x", spieler.getLocation().getX());
+					getConfig().set("red.y", spieler.getLocation().getY());
+					getConfig().set("red.z", spieler.getLocation().getZ());
+					saveConfig();
+					reloadConfig();
 				}
 				if (args[0].equalsIgnoreCase("setblue")) {
-
+					Player spieler = (Player) sender;
+					getConfig().set("blue.x", spieler.getLocation().getX());
+					getConfig().set("blue.y", spieler.getLocation().getY());
+					getConfig().set("blue.z", spieler.getLocation().getZ());
+					saveConfig();
+					reloadConfig();
 				}
 
 			}
@@ -94,5 +106,15 @@ public final class HobbitSnowFight extends JavaPlugin {
 		} else {
 			return (false);
 		}
+	}
+	public void loadConfiguration(){
+	     getConfig().addDefault("red.x", 0);
+	     getConfig().addDefault("red.y", 0);
+	     getConfig().addDefault("red.z", 0);
+	     getConfig().addDefault("blue.x", 0);
+	     getConfig().addDefault("blue.y", 0);
+	     getConfig().addDefault("blue.z", 0);
+	     getConfig().options().copyDefaults(true); 
+	     saveConfig();
 	}
 }

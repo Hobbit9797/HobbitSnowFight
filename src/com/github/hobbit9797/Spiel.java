@@ -2,7 +2,10 @@ package com.github.hobbit9797;
 
 import java.util.*;
 
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
@@ -10,10 +13,13 @@ public class Spiel {
 
 	public HashMap<Player, String> playerTeam = new HashMap<Player, String>();
 	public HobbitSnowFight hsf;
-	
-	public Spiel(HobbitSnowFight hsf, EntityListener el){
+	ItemStack itemstack = new ItemStack(Material.SNOW_BALL, 127);
+	ItemStack itemstack2 = new ItemStack(Material.SNOW_BALL, 127);
+
+
+	public Spiel(HobbitSnowFight hsf, EntityListener el) {
 		this.hsf = hsf;
-		
+
 	}
 
 	public void join(Player player2) {
@@ -21,15 +27,31 @@ public class Spiel {
 		if (playerTeam.containsKey(player2)) {
 			hsf.messagePlayer("Du bist bereits in einem Team!", player2);
 		} else {
-			if (rnd.nextBoolean()){
+			player2.getInventory().clear();
+			World world = player2.getLocation().getWorld();
+			if (rnd.nextBoolean()) {
 				playerTeam.put(player2, "Blau");
-			player2.getInventory().setHelmet(new ItemStack(Material.WOOL, 1, Short.parseShort("0"), (byte)Short.parseShort("11")));
-			}else {
+				player2.getInventory().setHelmet(
+						new ItemStack(Material.WOOL, 1, Short.parseShort("0"),
+								(byte) Short.parseShort("11")));
+				player2.teleport(new Location(world, hsf.getConfig().getDouble(
+						"blue.x"), hsf.getConfig().getDouble("blue.y")+1, hsf
+						.getConfig().getDouble("blue.z")));
+			} else {
 				playerTeam.put(player2, "Rot");
-				player2.getInventory().setHelmet(new ItemStack(Material.WOOL, 1, Short.parseShort("0"), (byte)Short.parseShort("14")));
+				player2.getInventory().setHelmet(
+						new ItemStack(Material.WOOL, 1, Short.parseShort("0"),
+								(byte) Short.parseShort("14")));
+				player2.teleport(new Location(world, hsf.getConfig().getDouble(
+						"red.x"), hsf.getConfig().getDouble("red.y")+1, hsf
+						.getConfig().getDouble("red.z")));
 			}
 			hsf.messagePlayer(
 					"Du bist jetzt im Team " + playerTeam.get(player2), player2);
+			player2.setGameMode(GameMode.SURVIVAL);
+			player2.getInventory().addItem(itemstack);
+			player2.getInventory().addItem(itemstack2);
+
 		}
 	}
 
@@ -38,8 +60,10 @@ public class Spiel {
 			playerTeam.remove(player2);
 			hsf.messagePlayer("Du hast dein Team verlassen.", player2);
 			player2.getInventory().setHelmet(null);
+			player2.getInventory().clear();
+			player2.teleport(player2.getWorld().getSpawnLocation());
 		} else {
-			
+
 			hsf.messagePlayer("Du bist in keinem Team!", player2);
 		}
 	}
