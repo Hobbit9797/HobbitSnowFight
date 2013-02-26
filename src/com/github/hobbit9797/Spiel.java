@@ -35,7 +35,9 @@ public class Spiel {
 				player2.teleport(new Location(Bukkit.getWorld(hsf.getConfig()
 						.getString("world")), hsf.getConfig().getDouble(
 						"blue.x"), hsf.getConfig().getDouble("blue.y") + 1, hsf
-						.getConfig().getDouble("blue.z")));
+						.getConfig().getDouble("blue.z"), (float) hsf
+						.getConfig().getDouble("blue.yaw"), (float) hsf
+						.getConfig().getDouble("blue.pitch")));
 			} else {
 				playerTeam.put(player2, "Rot");
 				player2.getInventory().setHelmet(
@@ -45,7 +47,9 @@ public class Spiel {
 						.getString("world")), hsf.getConfig()
 						.getDouble("red.x"),
 						hsf.getConfig().getDouble("red.y") + 1, hsf.getConfig()
-								.getDouble("red.z")));
+								.getDouble("red.z"), (float) hsf.getConfig()
+								.getDouble("red.yaw"), (float) hsf.getConfig()
+								.getDouble("red.pitch")));
 			}
 			hsf.messagePlayer(
 					"Du bist jetzt im Team " + playerTeam.get(player2), player2);

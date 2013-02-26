@@ -47,12 +47,28 @@ public class EntityListener implements Listener {
 						.getConfig().getString("world")), hsf.getConfig()
 						.getDouble("red.x"),
 						hsf.getConfig().getDouble("red.y") + 1, hsf.getConfig()
-								.getDouble("red.z")));
+								.getDouble("red.z"), (float) hsf.getConfig()
+								.getDouble("red.yaw"), (float) hsf.getConfig()
+								.getDouble("red.pitch")));
+				event.getPlayer()
+						.getInventory()
+						.setHelmet(
+								new ItemStack(Material.WOOL, 1, Short
+										.parseShort("0"), (byte) Short
+										.parseShort("14")));
 			} else {
 				event.setRespawnLocation(new Location(Bukkit.getWorld(hsf
 						.getConfig().getString("world")), hsf.getConfig()
 						.getDouble("blue.x"), hsf.getConfig().getDouble(
-						"blue.y") + 1, hsf.getConfig().getDouble("blue.z")));
+						"blue.y") + 1, hsf.getConfig().getDouble("blue.z"),
+						(float) hsf.getConfig().getDouble("blue.yaw"),
+						(float) hsf.getConfig().getDouble("blue.pitch")));
+				event.getPlayer()
+						.getInventory()
+						.setHelmet(
+								new ItemStack(Material.WOOL, 1, Short
+										.parseShort("0"), (byte) Short
+										.parseShort("11")));
 			}
 			event.getPlayer().getInventory().addItem(spiel.itemstack);
 
@@ -98,6 +114,15 @@ public class EntityListener implements Listener {
 			spiel.playerTeam.remove(event.getPlayer());
 			hsf.messagePlayer("Du hast HSF verlassen.", event.getPlayer());
 			event.getPlayer().getInventory().clear();
+		}
+	}
+
+	@EventHandler
+	public void onEntityDeath(EntityDeathEvent event) {
+		if (event.getEntity() instanceof Player) {
+			if (spiel.playerTeam.containsKey((Player) event.getEntity())) {
+				event.getDrops().clear();
+			}
 		}
 	}
 }

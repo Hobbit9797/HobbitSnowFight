@@ -89,6 +89,8 @@ public final class HobbitSnowFight extends JavaPlugin {
 					getConfig().set("red.x", spieler.getLocation().getX());
 					getConfig().set("red.y", spieler.getLocation().getY());
 					getConfig().set("red.z", spieler.getLocation().getZ());
+					getConfig().set("red.pitch", spieler.getLocation().getPitch());
+					getConfig().set("red.yaw", spieler.getLocation().getYaw());
 					getConfig().set("world",
 							spieler.getLocation().getWorld().getName());
 					saveConfig();
@@ -100,6 +102,8 @@ public final class HobbitSnowFight extends JavaPlugin {
 					getConfig().set("blue.x", spieler.getLocation().getX());
 					getConfig().set("blue.y", spieler.getLocation().getY());
 					getConfig().set("blue.z", spieler.getLocation().getZ());
+					getConfig().set("blue.pitch", spieler.getLocation().getPitch());
+					getConfig().set("blue.yaw", spieler.getLocation().getYaw());
 					getConfig().set("world",
 							spieler.getLocation().getWorld().getName());
 					saveConfig();
@@ -117,9 +121,13 @@ public final class HobbitSnowFight extends JavaPlugin {
 		getConfig().addDefault("red.x", 0);
 		getConfig().addDefault("red.y", 0);
 		getConfig().addDefault("red.z", 0);
+		getConfig().addDefault("red.pitch", 0);
+		getConfig().addDefault("red.yaw", 0);
 		getConfig().addDefault("blue.x", 0);
 		getConfig().addDefault("blue.y", 0);
 		getConfig().addDefault("blue.z", 0);
+		getConfig().addDefault("blue.pitch", 0);
+		getConfig().addDefault("blue.yaw", 0);
 		getConfig().addDefault("world", "world");
 		getConfig().options().copyDefaults(true);
 		saveConfig();
