@@ -21,7 +21,7 @@ public final class HobbitSnowFight extends JavaPlugin {
 
 		// register the entity listener we stored...
 		getServer().getPluginManager().registerEvents(el, this);
-		
+
 		loadConfiguration();
 	}
 
@@ -72,7 +72,6 @@ public final class HobbitSnowFight extends JavaPlugin {
 
 				}
 				if (args[0].equalsIgnoreCase("h")) {
-					// commands.hilfe(spieler);
 					messagePlayer("/hsf j: Trete HSF bei", (Player) sender);
 					messagePlayer("/hsf h: Liste die Hilfe auf",
 							(Player) sender);
@@ -84,21 +83,25 @@ public final class HobbitSnowFight extends JavaPlugin {
 					spiel.leave((Player) sender);
 				}
 				// admin befehle
-				if (args[0].equalsIgnoreCase("setred")) {
+				if (args[0].equalsIgnoreCase("setred")
+						&& (sender.hasPermission("hsf.admin") || sender.isOp())) {
 					Player spieler = (Player) sender;
 					getConfig().set("red.x", spieler.getLocation().getX());
 					getConfig().set("red.y", spieler.getLocation().getY());
 					getConfig().set("red.z", spieler.getLocation().getZ());
-					getConfig().set("world", spieler.getLocation().getWorld().getName());
+					getConfig().set("world",
+							spieler.getLocation().getWorld().getName());
 					saveConfig();
 					reloadConfig();
 				}
-				if (args[0].equalsIgnoreCase("setblue")) {
+				if (args[0].equalsIgnoreCase("setblue")
+						&& (sender.hasPermission("hsf.admin") || sender.isOp())) {
 					Player spieler = (Player) sender;
 					getConfig().set("blue.x", spieler.getLocation().getX());
 					getConfig().set("blue.y", spieler.getLocation().getY());
 					getConfig().set("blue.z", spieler.getLocation().getZ());
-					getConfig().set("world", spieler.getLocation().getWorld().getName());
+					getConfig().set("world",
+							spieler.getLocation().getWorld().getName());
 					saveConfig();
 					reloadConfig();
 				}
@@ -109,15 +112,16 @@ public final class HobbitSnowFight extends JavaPlugin {
 			return (false);
 		}
 	}
-	public void loadConfiguration(){
-	     getConfig().addDefault("red.x", 0);
-	     getConfig().addDefault("red.y", 0);
-	     getConfig().addDefault("red.z", 0);
-	     getConfig().addDefault("blue.x", 0);
-	     getConfig().addDefault("blue.y", 0);
-	     getConfig().addDefault("blue.z", 0);
-	     getConfig().addDefault("world", "world");
-	     getConfig().options().copyDefaults(true); 
-	     saveConfig();
+
+	public void loadConfiguration() {
+		getConfig().addDefault("red.x", 0);
+		getConfig().addDefault("red.y", 0);
+		getConfig().addDefault("red.z", 0);
+		getConfig().addDefault("blue.x", 0);
+		getConfig().addDefault("blue.y", 0);
+		getConfig().addDefault("blue.z", 0);
+		getConfig().addDefault("world", "world");
+		getConfig().options().copyDefaults(true);
+		saveConfig();
 	}
 }

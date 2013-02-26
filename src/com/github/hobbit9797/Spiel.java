@@ -16,8 +16,6 @@ public class Spiel {
 	public HobbitSnowFight hsf;
 	ItemStack itemstack = new ItemStack(Material.IRON_SPADE, 1);
 
-
-
 	public Spiel(HobbitSnowFight hsf, EntityListener el) {
 		this.hsf = hsf;
 
@@ -29,29 +27,30 @@ public class Spiel {
 			hsf.messagePlayer("Du bist bereits in einem Team!", player2);
 		} else {
 			player2.getInventory().clear();
-			World world = player2.getLocation().getWorld();
 			if (rnd.nextBoolean()) {
 				playerTeam.put(player2, "Blau");
 				player2.getInventory().setHelmet(
 						new ItemStack(Material.WOOL, 1, Short.parseShort("0"),
 								(byte) Short.parseShort("11")));
-				player2.teleport(new Location(Bukkit.getWorld(hsf.getConfig().getString("world")), hsf.getConfig().getDouble(
-						"blue.x"), hsf.getConfig().getDouble("blue.y")+1, hsf
+				player2.teleport(new Location(Bukkit.getWorld(hsf.getConfig()
+						.getString("world")), hsf.getConfig().getDouble(
+						"blue.x"), hsf.getConfig().getDouble("blue.y") + 1, hsf
 						.getConfig().getDouble("blue.z")));
 			} else {
 				playerTeam.put(player2, "Rot");
 				player2.getInventory().setHelmet(
 						new ItemStack(Material.WOOL, 1, Short.parseShort("0"),
 								(byte) Short.parseShort("14")));
-				player2.teleport(new Location(Bukkit.getWorld(hsf.getConfig().getString("world")), hsf.getConfig().getDouble(
-						"red.x"), hsf.getConfig().getDouble("red.y")+1, hsf
-						.getConfig().getDouble("red.z")));
+				player2.teleport(new Location(Bukkit.getWorld(hsf.getConfig()
+						.getString("world")), hsf.getConfig()
+						.getDouble("red.x"),
+						hsf.getConfig().getDouble("red.y") + 1, hsf.getConfig()
+								.getDouble("red.z")));
 			}
 			hsf.messagePlayer(
 					"Du bist jetzt im Team " + playerTeam.get(player2), player2);
 			player2.setGameMode(GameMode.SURVIVAL);
 			player2.getInventory().addItem(itemstack);
-
 
 		}
 	}

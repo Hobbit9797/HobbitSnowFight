@@ -9,11 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class EntityListener implements Listener {
@@ -72,6 +71,7 @@ public class EntityListener implements Listener {
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		if (spiel.playerTeam.containsKey(event.getPlayer())) {
 			spiel.playerTeam.remove(event.getPlayer());
+			event.getPlayer().getInventory().clear();
 		}
 	}
 
@@ -79,11 +79,25 @@ public class EntityListener implements Listener {
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
-			if (event.getClickedBlock().getType() == Material.SNOW && event.getPlayer().getItemInHand().getType()==Material.IRON_SPADE) {
-				event.getPlayer().getInventory().addItem(new ItemStack(Material.SNOW_BALL,1));
+			if ((event.getClickedBlock().getType() == Material.SNOW || event
+					.getClickedBlock().getType() == Material.SNOW_BLOCK)
+					&& event.getPlayer().getItemInHand().getType() == Material.IRON_SPADE) {
+				event.getPlayer().getInventory()
+						.addItem(new ItemStack(Material.SNOW_BALL, 1));
 				event.getPlayer().updateInventory();
 			}
 
+		}
+	}
+
+	@EventHandler
+	public void onPlayerTeleport(PlayerTeleportEvent event) {
+		if (spiel.playerTeam.containsKey(event.getPlayer())
+				&& !event.getTo().getWorld().getName()
+						.equalsIgnoreCase(hsf.getConfig().getString("world"))) {
+			spiel.playerTeam.remove(event.getPlayer());
+			hsf.messagePlayer("Du hast HSF verlassen.", event.getPlayer());
+			event.getPlayer().getInventory().clear();
 		}
 	}
 }
