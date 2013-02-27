@@ -44,22 +44,17 @@ public final class HobbitSnowFight extends JavaPlugin {
 	public void messageTeams(String nachricht) {
 
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-			p.sendMessage(ChatColor.DARK_AQUA + "[HSF]: " + ChatColor.GRAY
-					+ nachricht);
+			if (spiel.playerTeam.containsKey(p)) {
+				p.sendMessage(ChatColor.DARK_AQUA + "[HSF]: " + ChatColor.GRAY
+						+ nachricht);
+			}
 		}
 
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
-		if (cmd.getName().equalsIgnoreCase("call")) {
-			StringBuilder sb = new StringBuilder();
-			for (String arg : args)
-				sb.append(arg + " ");
-			messageAll(sb.toString());
-			return true;
-		} else if (cmd.getName().equalsIgnoreCase("hsf")
-				&& sender instanceof Player) {
+		if (cmd.getName().equalsIgnoreCase("hsf") && sender instanceof Player) {
 			if (args == null || args.length == 0) {
 				messagePlayer("HobbitSnowFight von Hobbit9797 für Tauncraft",
 						(Player) sender);
@@ -89,7 +84,8 @@ public final class HobbitSnowFight extends JavaPlugin {
 					getConfig().set("red.x", spieler.getLocation().getX());
 					getConfig().set("red.y", spieler.getLocation().getY());
 					getConfig().set("red.z", spieler.getLocation().getZ());
-					getConfig().set("red.pitch", spieler.getLocation().getPitch());
+					getConfig().set("red.pitch",
+							spieler.getLocation().getPitch());
 					getConfig().set("red.yaw", spieler.getLocation().getYaw());
 					getConfig().set("world",
 							spieler.getLocation().getWorld().getName());
@@ -102,7 +98,8 @@ public final class HobbitSnowFight extends JavaPlugin {
 					getConfig().set("blue.x", spieler.getLocation().getX());
 					getConfig().set("blue.y", spieler.getLocation().getY());
 					getConfig().set("blue.z", spieler.getLocation().getZ());
-					getConfig().set("blue.pitch", spieler.getLocation().getPitch());
+					getConfig().set("blue.pitch",
+							spieler.getLocation().getPitch());
 					getConfig().set("blue.yaw", spieler.getLocation().getYaw());
 					getConfig().set("world",
 							spieler.getLocation().getWorld().getName());

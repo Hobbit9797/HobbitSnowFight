@@ -120,7 +120,13 @@ public class EntityListener implements Listener {
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (event.getEntity() instanceof Player) {
-			if (spiel.playerTeam.containsKey((Player) event.getEntity())) {
+			if (spiel.playerTeam.containsKey((Player) event.getEntity())
+					&& event.getEntity().getLastDamageCause() instanceof Snowball) {
+				Snowball ball = (Snowball) event.getEntity()
+						.getLastDamageCause();
+				Player killer = (Player) ball.getShooter();
+				hsf.messageTeams(((Player) event.getEntity()).getName()
+						+ " wurde von " + killer.getName() + " getötet!");
 				event.getDrops().clear();
 			}
 		}

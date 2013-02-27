@@ -3,9 +3,6 @@ main: com.github.hobbit9797.HobbitSnowFight
 version: 1.0
 author: Hobbit9797
 commands:
-  call:
-    description: This is a demo command.
-    usage: /call [text]
   hsf:
     description: HobbitSnowFight von Hobbit9797
     usage: /hsf [arg]

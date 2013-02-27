@@ -55,6 +55,7 @@ public class Spiel {
 					"Du bist jetzt im Team " + playerTeam.get(player2), player2);
 			player2.setGameMode(GameMode.SURVIVAL);
 			player2.getInventory().addItem(itemstack);
+			hsf.messageTeams(player2.getName() + " hat das Team " + playerTeam.get(player2) + " betreten!");
 
 		}
 	}
