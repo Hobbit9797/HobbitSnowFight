@@ -88,6 +88,7 @@ public class EntityListener implements Listener {
 		if (spiel.playerTeam.containsKey(event.getPlayer())) {
 			spiel.playerTeam.remove(event.getPlayer());
 			event.getPlayer().getInventory().clear();
+			event.getPlayer().getInventory().setHelmet(null);
 		}
 	}
 
@@ -114,17 +115,15 @@ public class EntityListener implements Listener {
 			spiel.playerTeam.remove(event.getPlayer());
 			hsf.messagePlayer("Du hast HSF verlassen.", event.getPlayer());
 			event.getPlayer().getInventory().clear();
+			event.getPlayer().getInventory().setHelmet(null);
 		}
 	}
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (event.getEntity() instanceof Player) {
-			if (spiel.playerTeam.containsKey((Player) event.getEntity())
-					&& event.getEntity().getLastDamageCause() instanceof Snowball) {
-				Snowball ball = (Snowball) event.getEntity()
-						.getLastDamageCause();
-				Player killer = (Player) ball.getShooter();
+			if (spiel.playerTeam.containsKey((Player) event.getEntity())) {
+				Player killer = event.getEntity().getKiller();
 				hsf.messageTeams(((Player) event.getEntity()).getName()
 						+ " wurde von " + killer.getName() + " getötet!");
 				event.getDrops().clear();
