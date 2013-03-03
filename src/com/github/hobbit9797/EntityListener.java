@@ -1,6 +1,7 @@
 package com.github.hobbit9797;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -86,9 +87,7 @@ public class EntityListener implements Listener {
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		if (spiel.playerTeam.containsKey(event.getPlayer())) {
-			spiel.playerTeam.remove(event.getPlayer());
-			event.getPlayer().getInventory().clear();
-			event.getPlayer().getInventory().setHelmet(null);
+			spiel.leave(event.getPlayer());
 		}
 	}
 
@@ -112,22 +111,23 @@ public class EntityListener implements Listener {
 		if (spiel.playerTeam.containsKey(event.getPlayer())
 				&& !event.getTo().getWorld().getName()
 						.equalsIgnoreCase(hsf.getConfig().getString("world"))) {
-			spiel.playerTeam.remove(event.getPlayer());
-			hsf.messagePlayer("Du hast HSF verlassen.", event.getPlayer());
-			event.getPlayer().getInventory().clear();
-			event.getPlayer().getInventory().setHelmet(null);
+			spiel.leave(event.getPlayer());
 		}
 	}
 
 	@EventHandler
-	public void onEntityDeath(EntityDeathEvent event) {
-		if (event.getEntity() instanceof Player) {
+	public void onEntityDeath(PlayerDeathEvent event) {
 			if (spiel.playerTeam.containsKey((Player) event.getEntity())) {
 				Player killer = event.getEntity().getKiller();
 				hsf.messageTeams(((Player) event.getEntity()).getName()
 						+ " wurde von " + killer.getName() + " getötet!");
+				hsf.getConfig().set("kills."+killer.getName(), hsf.getConfig().getInt("kills."+killer.getName())+1);
+				hsf.getConfig().set("deaths."+event.getEntity().getName(), hsf.getConfig().getInt("deaths."+event.getEntity().getName())+1);
+				hsf.saveConfig();
+				hsf.reloadConfig();
 				event.getDrops().clear();
+				event.setDeathMessage("");
 			}
-		}
+		
 	}
 }

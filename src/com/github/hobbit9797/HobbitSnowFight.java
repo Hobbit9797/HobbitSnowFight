@@ -77,6 +77,11 @@ public final class HobbitSnowFight extends JavaPlugin {
 				if (args[0].equalsIgnoreCase("l")) {
 					spiel.leave((Player) sender);
 				}
+				
+				if (args[0].equalsIgnoreCase("s")) {
+					messagePlayer("Getötete Spieler: " + getConfig().getInt("kills."+sender.getName()), (Player)sender);
+					messagePlayer("Tode: " + getConfig().getInt("deaths."+sender.getName()), (Player)sender);
+				}
 				// admin befehle
 				if (args[0].equalsIgnoreCase("setred")
 						&& (sender.hasPermission("hsf.admin") || sender.isOp())) {

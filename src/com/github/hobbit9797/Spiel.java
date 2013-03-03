@@ -56,7 +56,12 @@ public class Spiel {
 			player2.setGameMode(GameMode.SURVIVAL);
 			player2.getInventory().addItem(itemstack);
 			hsf.messageTeams(player2.getName() + " hat das Team " + playerTeam.get(player2) + " betreten!");
-
+			if(!hsf.getConfig().isSet("kills."+player2.getName())&&!hsf.getConfig().isSet("deaths."+player2.getName())){
+				hsf.getConfig().set("kills."+player2.getName(), 0);
+				hsf.getConfig().set("deaths."+player2.getName(), 0);
+			}
+			hsf.saveConfig();
+			hsf.reloadConfig();
 		}
 	}
 
