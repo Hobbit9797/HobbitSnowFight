@@ -71,6 +71,13 @@ public class EntityListener implements Listener {
 	@EventHandler
 	public void playerDeath(PlayerRespawnEvent event) {
 		if (spiel.playerTeam.containsKey(event.getPlayer())) {
+			ItemStack lhelmet = new ItemStack(Material.LEATHER_HELMET, 1);
+			ItemStack lbreast = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+			ItemStack lleggings = new ItemStack(Material.LEATHER_LEGGINGS,1);
+			ItemStack lfoot = new ItemStack(Material.LEATHER_BOOTS, 1);
+			lfoot.addEnchantment(Enchantment.PROTECTION_FALL, 10);
+			LeatherArmorMeta lam = (LeatherArmorMeta) lhelmet.getItemMeta();
+			
 			if (spiel.playerTeam.get(event.getPlayer()).equalsIgnoreCase("Rot")) {
 				event.setRespawnLocation(new Location(Bukkit.getWorld(hsf
 						.getConfig().getString("world")), hsf.getConfig()
@@ -79,23 +86,8 @@ public class EntityListener implements Listener {
 								.getDouble("red.z"), (float) hsf.getConfig()
 								.getDouble("red.yaw"), (float) hsf.getConfig()
 								.getDouble("red.pitch")));
-				ItemStack lhelmet = new ItemStack(Material.LEATHER_HELMET, 1);
-				ItemStack lbreast = new ItemStack(Material.LEATHER_CHESTPLATE,
-						1);
-				ItemStack lleggings = new ItemStack(Material.LEATHER_LEGGINGS,
-						1);
-				ItemStack lfoot = new ItemStack(Material.LEATHER_BOOTS, 1);
-				lfoot.addEnchantment(Enchantment.PROTECTION_FALL, 10);
 				LeatherArmorMeta lam = (LeatherArmorMeta) lhelmet.getItemMeta();
 				lam.setColor(spiel.red);
-				lhelmet.setItemMeta(lam);
-				lbreast.setItemMeta(lam);
-				lleggings.setItemMeta(lam);
-				lfoot.setItemMeta(lam);
-				event.getPlayer().getInventory().setHelmet(lhelmet);
-				event.getPlayer().getInventory().setChestplate(lbreast);
-				event.getPlayer().getInventory().setLeggings(lleggings);
-				event.getPlayer().getInventory().setBoots(lfoot);
 			} else {
 				event.setRespawnLocation(new Location(Bukkit.getWorld(hsf
 						.getConfig().getString("world")), hsf.getConfig()
@@ -103,24 +95,17 @@ public class EntityListener implements Listener {
 						"blue.y") + 1, hsf.getConfig().getDouble("blue.z"),
 						(float) hsf.getConfig().getDouble("blue.yaw"),
 						(float) hsf.getConfig().getDouble("blue.pitch")));
-				ItemStack lhelmet = new ItemStack(Material.LEATHER_HELMET, 1);
-				ItemStack lbreast = new ItemStack(Material.LEATHER_CHESTPLATE,
-						1);
-				ItemStack lleggings = new ItemStack(Material.LEATHER_LEGGINGS,
-						1);
-				ItemStack lfoot = new ItemStack(Material.LEATHER_BOOTS, 1);
-				lfoot.addEnchantment(Enchantment.PROTECTION_FALL, 10);
-				LeatherArmorMeta lam = (LeatherArmorMeta) lhelmet.getItemMeta();
 				lam.setColor(spiel.blue);
-				lhelmet.setItemMeta(lam);
-				lbreast.setItemMeta(lam);
-				lleggings.setItemMeta(lam);
-				lfoot.setItemMeta(lam);
-				event.getPlayer().getInventory().setHelmet(lhelmet);
-				event.getPlayer().getInventory().setChestplate(lbreast);
-				event.getPlayer().getInventory().setLeggings(lleggings);
-				event.getPlayer().getInventory().setBoots(lfoot);
 			}
+			
+			lhelmet.setItemMeta(lam);
+			lbreast.setItemMeta(lam);
+			lleggings.setItemMeta(lam);
+			lfoot.setItemMeta(lam);
+			event.getPlayer().getInventory().setHelmet(lhelmet);
+			event.getPlayer().getInventory().setChestplate(lbreast);
+			event.getPlayer().getInventory().setLeggings(lleggings);
+			event.getPlayer().getInventory().setBoots(lfoot);
 			event.getPlayer().getInventory().addItem(spiel.itemstack);
 
 		}
@@ -175,12 +160,12 @@ public class EntityListener implements Listener {
 				hsf.messageTeams(ChatColor.BLUE
 						+ ((Player) event.getEntity()).getName()
 						+ ChatColor.GRAY + " wurde von " + ChatColor.RED
-						+ killer.getName() + ChatColor.GRAY + " getötet!");
+						+ killer.getName() + ChatColor.GRAY + " getÃ¶tet!");
 			} else {
 				hsf.messageTeams(ChatColor.RED
 						+ ((Player) event.getEntity()).getName()
 						+ ChatColor.GRAY + " wurde von " + ChatColor.BLUE
-						+ killer.getName() + ChatColor.GRAY + " getötet!");
+						+ killer.getName() + ChatColor.GRAY + " getÃ¶tet!");
 			}
 
 			hsf.getConfig().set("kills." + killer.getName(),
